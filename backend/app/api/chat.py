@@ -9,7 +9,8 @@ router = APIRouter()
 
 conversation_histories = {}
 
-client = Groq(api_key="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")
+client = Groq(api_key=os.environ.get("GROQ_API_KEY", ""))
+# client = Groq(api_key="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")
 
 def get_system_prompt(patient_name: str, mode: str, language: str):
     lang_instruction = "Always respond in Hindi language." if language == "hindi" else "Always respond in English language."
