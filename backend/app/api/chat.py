@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import text
 from database import get_db
 from groq import Groq
+from prompts import get_system_prompt
 import os
 
 router = APIRouter()
@@ -10,43 +11,6 @@ router = APIRouter()
 conversation_histories = {}
 
 client = Groq(api_key=os.environ.get("GROQ_API_KEY", ""))
-# client = Groq(api_key="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")
-
-def get_system_prompt(patient_name: str, mode: str, language: str):
-    lang_instruction = "Always respond in Hindi language." if language == "hindi" else "Always respond in English language."
-    
-    if mode == "doctor":
-        persona = f"""You are Dr. AI, a clinical healthcare assistant talking to {patient_name}. 
-        Be professional, precise and clinical in your responses.
-        Use medical terminology but explain it simply."""
-    elif mode == "emergency":
-        persona = f"""You are an Emergency Healthcare Assistant talking to {patient_name}.
-        Be very direct, urgent and clear.
-        Always prioritize emergency situations and suggest calling emergency services immediately if needed.
-        Use simple, clear language."""
-    else:
-        persona = f"""You are a friendly AI healthcare assistant talking to {patient_name}.
-        Be warm, empathetic and supportive.
-        Make the patient feel comfortable and cared for."""
-
-    return f"""{persona}
-
-{lang_instruction}
-
-Your responsibilities:
-1. Help {patient_name} understand their symptoms
-2. Provide general health information
-3. Help book appointments
-4. Answer questions about medications
-5. Provide emotional support
-6. Escalate critical cases to doctors
-
-Important rules:
-- Never diagnose diseases directly
-- Always recommend consulting a doctor for serious symptoms
-- If patient mentions chest pain or difficulty breathing - immediately suggest emergency services
-- Ask follow up questions to better understand patient needs
-- You are integrated with an EHR system at a healthcare facility in India."""
 
 def chat_with_bot(message: str, history: list, patient_name: str, mode: str, language: str):
     history.append({"role": "user", "content": message})
@@ -81,7 +45,6 @@ def send_message(
     if patient_id not in conversation_histories:
         conversation_histories[patient_id] = []
 
-    # Get patient name from database
     patient = db.execute(text("SELECT full_name FROM patients WHERE id = :id"), {"id": patient_id}).fetchone()
     patient_name = patient.full_name if patient else "Patient"
 
