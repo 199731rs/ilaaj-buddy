@@ -24,8 +24,8 @@ function App() {
       const response = await fetch(
         // `http://127.0.0.1:8000/chat/message?patient_id=${patientId}&message=${encodeURIComponent(input)}&mode=${mode}&language=${language}`,
 
-        `${process.env.REACT_APP_API_URL}/chat/message?patient_id=${patientId}&message=${encodeURIComponent(input)}&mode=${mode}&language=${language}`,
-
+        // `${process.env.REACT_APP_API_URL}/chat/message?patient_id=${patientId}&message=${encodeURIComponent(input)}&mode=${mode}&language=${language}`,
+        `https://ilaaj-buddy-backend.onrender.com/chat/message?patient_id=${patientId}&message=${encodeURIComponent(input)}&mode=${mode}&language=${language}`,
         {
           method: 'POST',
           headers: { 'accept': 'application/json' }
