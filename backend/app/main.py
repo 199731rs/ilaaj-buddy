@@ -11,9 +11,13 @@ app = FastAPI(
     version="1.0.0"
 )
 
+# ✅ FIXED CORS (important change)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+   # allow_origins=["*"], 
+    allow_origins=[
+        "https://ilaaj-buddy.vercel.app"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
