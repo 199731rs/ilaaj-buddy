@@ -3,7 +3,7 @@ import './App.css';
 
 function App() {
   const [messages, setMessages] = useState([
-    { sender: 'bot', text: 'Hey! Main hoon Ilaaj Buddy 💊 Tera sehat ka bestie! Bata, kya hua? 😊' }
+    { sender: 'bot', text: "Hello! I am Ilaaj Buddy 💊, your healthcare assistant. Please tell me what's bothering you." }
   ]);
   const [input, setInput] = useState('');
   const [patientId] = useState(1);
@@ -65,7 +65,7 @@ function App() {
           </div>
           <div className="header-info">
             <h1>Ilaaj Buddy</h1>
-            <p>AI Health Assistant • Online</p>
+            <p>AI Health Assistant</p>
           </div>
         </div>
         <div className="header-right">
