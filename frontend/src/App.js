@@ -112,9 +112,9 @@ function App() {
               <div className={`bubble ${msg.sender}`}>
                 {msg.text}
               </div>
-              {msg.sentiment && (
+              {/* /* {msg.sentiment && (
                 <span className="sentiment">{msg.sentiment}</span>
-              )}
+              )} */ }
               {msg.sender === 'user' && <span className="read-receipt">Read</span>}
             </div>
           </div>
